@@ -1,0 +1,130 @@
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class treehw {
+  static int max = 0; 
+  public static void main(String[] args) {
+    int[] num = {1,3, 10, 12, 20};
+    treehw a = new treehw();
+    TreeNode root = a.buildTree(num, 0, (num.length-1));
+    boolean b = a.findTree(root, 4);
+    System.out.println(b);
+    a.printPreOrder(root);
+    System.out.println();
+    a.inOrder(root);
+    System.out.println();
+    a.postOrder(root);
+    System.out.println();
+    a.findMaxLevel(root, 1);
+    System.out.println(max);
+
+
+
+    Queue<Integer> q = new LinkedList<>();
+    q.add(1);
+    q.add(2);
+    q.add(3);
+
+    a.removeQ(q);
+  }
+  public void removeQ(Queue<Integer> q) {
+    while (!q.isEmpty()) {
+      int val = q.remove();
+      System.out.print(val + " ");
+    }
+    System.out.println();
+  }
+
+  public TreeNode buildTree(int[] a, int left, int right) {
+    if (left > right) {
+      return null;
+    }
+    int mid = (left + right)/2;
+    int v = a[mid];
+    TreeNode root = new TreeNode(v);
+    TreeNode l = buildTree(a, left, mid-1);
+    root.left = l;
+    TreeNode r = buildTree(a, mid+1, right);
+    root.right = r;
+    return root; 
+  }
+
+  public boolean findTree(TreeNode root, int v) {
+    TreeNode cur = root;
+    while (cur != null) {
+      if (cur.val > v) {
+        cur = cur.left;
+      } else if (cur.val < v) {
+        cur = cur.right;
+      } else {
+        return true;
+      }
+    }
+    return false; 
+  }
+
+  public void printPreOrder (TreeNode root) {
+	  if (root == null) return;
+	  System.out.print (root.val + " ");
+	  printPreOrder (root.left); 
+	  printPreOrder (root.right); 
+  }
+
+  public void inOrder (TreeNode root) {
+    if (root == null) return;
+    inOrder(root.left);
+    System.out.print (root.val + " ");
+    inOrder(root.right);
+  }
+
+  public void postOrder (TreeNode root) {
+    if (root == null) return;
+    postOrder(root.right);
+    System.out.print (root.val + " ");
+    postOrder(root.left);
+  }
+
+  public void findMaxLevel(TreeNode root, int level) {
+    if (root == null) return;
+    if (level > max) max = level;
+    findMaxLevel(root.left, level+1);
+    findMaxLevel(root.right, level+1);
+  }
+
+  public void minValue(TreeNode root) { 
+    if (root == null) return;
+    if (root.val < min) min = root;
+    minValue (root.left);
+    minValue (root.right);
+  }
+  //above is for binary tree; below is for binary search tree
+  public void minVal(TreeNode root) {
+    if (root == null) return;
+    min = root.val;
+    minVal (root.left);
+  }
+
+  public void levelPrint(TreeNode root) {
+    if (root == null) return;
+    ArrayList<TreeNode> q = new ArrayList<>();
+    q.add(root);
+    while (!q.isEmpty()) {
+      int length = q.size();
+      for (int i = 0; i < length; i++) {
+        TreeNode cur = q.remove();
+        if (cur.left != null) q.add(cur.left);
+        if (cur.right != null) q.add(cur.right);
+        System.out.println(cur.val + " ");
+      }
+    }
+  }
+}
+
+class TreeNode {
+  int val;
+  TreeNode left;
+  TreeNode right;
+  public TreeNode (int val) {
+    this.val = val;
+  }
+}
