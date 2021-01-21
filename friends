@@ -1,0 +1,81 @@
+public class friends {
+  public static void main(String[] args) {
+     String[] names = {"Katie", "Grace", "Adrianne", "Ivilyn"};
+     friends f = new friends();
+     ListNode h = f.createList(names);
+     f.printList(h);
+     f.addList(h, "Shoshana");
+     f.printList(h);
+     f.deleteList(h, "Grace");
+     f.printList(h);
+     f.searchList(h, "Angela");
+     f.printList(h);
+     f.addListt(h, "William");
+     f.printList(h);
+  }
+
+  public void addList(ListNode head, String friend) {
+    ListNode n = new ListNode(friend);
+    ListNode cur = head;
+    while (cur.next != null) {
+      cur = cur.next;
+    }
+    cur.next = n;
+  }
+
+  public void deleteList(ListNode head, String friend) {
+    ListNode cur = head;
+    while (cur.next.name != friend) {
+      cur = cur.next;
+    }
+    cur.next = cur.next.next;
+  }
+
+  public void addListt(ListNode head, String friend) {
+    ListNode cur = head;
+    ListNode w = new ListNode(friend);
+    w.next = head.next;
+    head.next = w;
+  }
+
+  public void searchList(ListNode head, String friend) {
+    ListNode cur = head;
+    while (cur.name != friend) {
+      cur = cur.next;
+      if (cur.next == null) {
+        ListNode n = new ListNode(friend);
+        cur.next = n;
+        System.out.println("I added angela");
+        return;
+      }
+    }
+    System.out.println("We found angela");
+  }
+  
+  public void printList(ListNode head) {
+    ListNode cur = head;
+    while (cur != null) {
+      System.out.print(cur.name + " ");
+      cur = cur.next;
+    }
+    System.out.println();
+  }
+
+  public ListNode createList(String[] n) {
+    ListNode h = new ListNode(n[0]);
+    ListNode cur = h;
+    for (int i = 1; i < n.length; i++) {
+      cur.next = new ListNode(n[i]);
+      cur = cur.next;
+    }
+    return h;
+  }
+}
+
+class ListNode {
+	String name;
+	ListNode next;
+	public ListNode(String name) {
+	  this.name = name;
+  }
+} 
